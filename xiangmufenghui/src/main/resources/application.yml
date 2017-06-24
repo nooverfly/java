@@ -1,0 +1,19 @@
+server:
+  port: 8090
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://localhost:3306/fh
+  mvc:
+    view:
+      prefix: /WEB-INF/
+      suffix: .jsp
+  http:
+      encoding:
+        force: true
+mybatis:
+  type-aliases-package: cn.tarena.fh.pojo
+  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:/mappers/*.xml

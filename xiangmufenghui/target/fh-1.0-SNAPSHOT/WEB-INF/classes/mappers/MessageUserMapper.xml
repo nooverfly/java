@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tarena.fh.mapper.MessageUserMapper">
+
+
+	<resultMap id="messageUserRM" type="MessageUser" autoMapping="true">
+		<result column="long_time" property="longTime"/>
+		<result column="dept_name" property="deptName"/>
+	</resultMap>
+
+
+	<!--查询用户全部信息  -->
+	<select id="findAll" resultMap="messageUserRM">
+		SELECT * from message_user
+	</select>
+	
+	<select id="findOne" resultType="MessageUser">
+		SELECT * FROM message_user where  name=#{name}
+	</select>
+
+	<update id="updateStateOne">
+		update  message_user  set state = #{state}  where name=#{name}
+	</update>
+	
+	<update id="updateStateOneUser">
+		UPDATE  message_user SET state=#{state},long_time=#{longTime},dept_name=#{deptName},headurl=#{headurl} where  name=#{name}
+	</update>
+	
+	
+</mapper>

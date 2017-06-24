@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.tarena.fh.mapper.NoticeMapper">
+
+	<!-- 查询所有公告 -->
+	<select id="findAll" resultType="Notice">
+		SELECT * FROM notice
+	</select>
+
+	<!--  根据noticeId查询Notice-->
+	<select id="findNoticeByNoticeId" resultType="Notice">
+		SELECT * FROM notice WHERE noticeId=#{ noticeId }
+	</select>
+
+	<!-- 根据noticeId更新Notice -->
+	<update id="updateNoticeByNoticeId">
+		UPDATE notice SET
+		noticeTitle=#{ notice.noticeTitle },
+		createBy=#{ notice.createBy },
+		noticeMessage=#{ notice.noticeMessage }
+		WHERE
+		noticeId=#{ noticeId }
+	</update>
+
+	<!-- 保存Notice -->
+	<insert id="saveNotice">
+		INSERT INTO  notice(noticeId,noticeTitle,noticeMessage,createTime,createBy)
+		VALUES (
+			#{ noticeId },
+    		#{ noticeTitle },
+   			#{ noticeMessage },
+    		#{ createTime },
+    		#{ createBy }
+		)
+
+	</insert>
+
+	<!-- 根据noticeId批量删除公告 -->
+	<delete id="deleteNotice">
+
+		DELETE FROM notice WHERE noticeId in(
+			<foreach collection="array" item="noticeId" separator=",">
+				#{ noticeId }
+			</foreach>
+		)
+
+	</delete>
+
+	<!--  根据NoticeTitle 或者 createBy 模糊查询 -->
+	<select id="findNoticeByNoticeTitleOrCreateBy" resultType="Notice">
+		SELECT * FROM notice WHERE createBy LIKE CONCAT(CONCAT('%', #{message}), '%') OR noticeTitle LIKE CONCAT(CONCAT('%', #{message}), '%');
+	</select>
+</mapper>
